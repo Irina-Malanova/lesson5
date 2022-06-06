@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "products")
-public class ProductItem {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -16,13 +16,14 @@ public class ProductItem {
     @Column(name = "cost")
     private int cost;
 
-    public ProductItem(String title, int cost) {
+
+    public Product(String title, int cost) {
 
         this.title = title;
         this.cost = cost;
     }
 
-    public ProductItem() {
+    public Product() {
         super();
     }
 

@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.gb.webapp.model.Product;
 import ru.gb.webapp.services.ProductsService;
 
 @Controller
@@ -61,7 +60,8 @@ public class ProductsController {
     // POST http://localhost:8189/app/product/create
     @PostMapping(value = "/create")
     public String saveProduct(@RequestParam String title, @RequestParam int cost) {
-        productsService.save(new Product(0L, title, cost));
+
+        productsService.save(title, cost);
         return "redirect:/product/show_all";
     }
 

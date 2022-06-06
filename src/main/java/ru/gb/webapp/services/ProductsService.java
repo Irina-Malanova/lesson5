@@ -3,7 +3,7 @@ package ru.gb.webapp.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.gb.webapp.dao.ProductsDao;
-import ru.gb.webapp.model.Product;
+import ru.gb.webapp.entities.Product;
 
 import java.util.List;
 
@@ -20,7 +20,10 @@ public class ProductsService {
         return productsRepository.findAll();
     }
 
-    public void save(Product product) {
+    public void save(String title, int cost) {
+        Product product = new Product();
+        product.setCost(cost);
+        product.setTitle(title);
         productsRepository.save(product);
     }
 

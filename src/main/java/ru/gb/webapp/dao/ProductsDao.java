@@ -6,16 +6,15 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import ru.gb.webapp.entities.ProductItem;
-import ru.gb.webapp.model.Product;
+import ru.gb.webapp.entities.Product;
 
 import javax.persistence.NoResultException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @Component
 public class ProductsDao {
+    private static final String sql = "SELECT a FROM Product a where a.id=";
     @Autowired
     @Qualifier("getSessionFactory")
     private SessionFactory sessionFactory;
@@ -27,16 +26,12 @@ public class ProductsDao {
     public List<Product> findAll() {
         Session session = getSession();
         Transaction transaction = session.beginTransaction();
-        List<ProductItem> productList = getSession().createQuery("from ProductItem").getResultList();
+        List<Product> productList = getSession().createQuery("from Product").getResultList();
         transaction.commit();
         if (productList.isEmpty()) {
             return Collections.emptyList();
         }
-        List<Product> products = new ArrayList<>();
-        for (ProductItem item : productList) {
-            products.add(new Product(item.getId(), item.getTitle(), item.getCost()));
-        }
-        return products;
+        return productList;
     }
 
     public void save(Product product) {
@@ -44,12 +39,11 @@ public class ProductsDao {
         Session session = getSession();
         Transaction transaction = session.beginTransaction();
         try {
-            ProductItem productFind = session.createQuery("SELECT a FROM ProductItem a where a.id=" + id, ProductItem.class).getSingleResult();
+            Product productFind = session.createQuery(sql + id, Product.class).getSingleResult();
             productFind.setCost(product.getCost());
             session.save(productFind);
-
         } catch (NoResultException e) {
-            session.save(new ProductItem(product.getTitle(), product.getCost()));
+            session.save(new Product(product.getTitle(), product.getCost()));
         }
 
         transaction.commit();
@@ -58,8 +52,7 @@ public class ProductsDao {
     public void delete(Long id) {
         Session session = getSession();
         Transaction transaction = session.beginTransaction();
-        ProductItem productFind = session.createQuery(
-                "SELECT a FROM ProductItem a where a.id=" + id, ProductItem.class).getSingleResult();
+        Product productFind = session.createQuery(sql + id, Product.class).getSingleResult();
         if (productFind != null) {
             session.delete(productFind);
         }
@@ -69,8 +62,8 @@ public class ProductsDao {
     public Product findById(Long id) {
         Session session = getSession();
         Transaction transaction = session.beginTransaction();
-        ProductItem productItem = session.createQuery("SELECT a FROM ProductItem a where a.id=" + id, ProductItem.class).getSingleResult();
+        Product productItem = session.createQuery(sql + id, Product.class).getSingleResult();
         transaction.commit();
-        return (new Product(productItem.getId(), productItem.getTitle(), productItem.getCost()));
+        return (productItem);
     }
 }

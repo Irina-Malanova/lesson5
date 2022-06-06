@@ -20,6 +20,9 @@
         <!--         Выполняет проверку схемы и не вносит в ене никаких изменений  -->
         <!--         <property name="hibernate.hbm2ddl.auto">create-drop</property>  -->
         <!--         Полная очистка схемы и создание ее по разметке Hibernate. После закрытия Factory выполняется DROP  -->
-        <mapping class="ru.gb.webapp.entities.ProductItem"/>
+        <mapping class="ru.gb.webapp.entities.Product"/>
+        <mapping class="ru.gb.webapp.entities.Customer"/>
+        <mapping class="ru.gb.webapp.entities.CustomersDetail"/>
+        <mapping class="ru.gb.webapp.entities.Order"/>
     </session-factory>
 </hibernate-configuration>

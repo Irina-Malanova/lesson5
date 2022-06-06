@@ -1,0 +1,22 @@
+GET http://localhost:8189/app/product/info
+
+###
+GET http://localhost:8189/app/product/show/1
+
+###
+GET http://localhost:8189/app/product/show_all
+
+###
+GET http://localhost:8189/app/product/delete/1
+
+###
+GET http://localhost:8189/app/customer/show_all
+
+###
+GET http://localhost:8189/app/customer/show/1
+
+###
+GET http://localhost:8189/app/customer/getOrderList/1
+
+###
+GET http://localhost:8189/app/order/show/1

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Список продуктов</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="card">
+    <div class="card-header">Заказ </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <td>Id покупателя</td>
+                <td>Номер заказа</td>
+                <td>Наименование товара</td>
+                <td>Цена</td>
+                <td/>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="s : ${orderList}">
+                <td th:text="${s.Customer.id}"></td>
+                <td th:text="${s.orderNummer}"></td>
+                <td th:text="${s.Product.title}"></td>
+                <td th:text="${s.price}"></td>
+
+                <td>
+                    <a th:href="@{'/order/delete/'+${s.orderNummer}+'/'+${s.Customer.id}+'/'+${s.Product.id}}" class="btn btn-primary">Удалить продукт из заказа</a>
+                </td>
+            </tr>
+            <a th:href="@{'/order/create/'+${orderList.get(0).Customer.id}}" type="button" class="btn btn-primary">добавить продукт</a>
+            </tbody>
+        </table>
+        <p></p>
+        <span th:text="${'Всего товаров: ' + orderList.size()}"/>
+        <a th:href="@{'/customer/show_all'}" type="button" class="btn btn-primary">назад</a>
+    </div></div>
+</body>
+</html>
